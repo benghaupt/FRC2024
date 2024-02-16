@@ -6,17 +6,11 @@ package frc.robot.inputs;
 
 import org.assabet.aztechs157.input.layouts.Layout;
 import org.assabet.aztechs157.input.layouts.MapLayout;
-
 import java.util.function.DoubleSupplier;
-
 import org.assabet.aztechs157.input.layouts.DynamicLayout;
 import org.assabet.aztechs157.input.models.XboxOne;
 import org.assabet.aztechs157.input.values.Axis;
 import org.assabet.aztechs157.input.values.Button;
-import org.assabet.aztechs157.numbers.Deadzone;
-import org.assabet.aztechs157.numbers.Range;
-
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Constants.ControllerConstants;
@@ -38,7 +32,7 @@ public class Inputs extends DynamicLayout {
     public static Inputs createFromChooser() {
         final SendableChooser<Layout> chooser = new SendableChooser<>();
         chooser.setDefaultOption("xbox", doubleXBOXLayout(XboxSpeeds.COMPETITION));
-        // chooser.addOption("demo", doubleXBOXLayout(XboxSpeeds.DEMO));
+        chooser.addOption("demo", doubleXBOXLayout(XboxSpeeds.DEMO));
         Shuffleboard.getTab("Driver").add("Layout Choose", chooser);
 
         return new Inputs(chooser);
@@ -52,11 +46,6 @@ public class Inputs extends DynamicLayout {
         final var layout = new MapLayout();
         final var driver = new XboxOne(ControllerConstants.DRIVER_CONTROLLER_PORT);
         final var operator = new XboxOne(ControllerConstants.OPERATOR_CONTROLLER_PORT);
-
-        /*
-         * final Deadzone xboxDeadzone = Deadzone.forAxis(new Range(-0.1, 0.1));
-         * final Rotation2d maxRotationPerSecond = Rotation2d.fromDegrees(130);
-         */
 
         final DoubleSupplier driveSpeed = () -> {
             if (driver.leftStickPress.get()) {

@@ -5,21 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -34,9 +25,9 @@ import frc.robot.subsystems.HangerSystem;
 import frc.robot.subsystems.IntakeSystem;
 import frc.robot.subsystems.PneumaticsSystem;
 import frc.robot.subsystems.ShooterSystem;
-
 import java.io.File;
-
+import java.io.IOException;
+import org.assabet.aztechs157.auton.AutonChooser;
 import com.pathplanner.lib.auto.NamedCommands;
 
 /**
@@ -57,13 +48,17 @@ public class RobotContainer {
     private final IntakeSystem intakeSystem = new IntakeSystem();
     private final ShooterSystem shooterSystem = new ShooterSystem();
     private final HangerSystem hangerSystem = new HangerSystem();
+    private final AutonChooser autonChooser = AutonChooser
+            .createFromChooser(new File(Filesystem.getDeployDirectory(), "pathplanner/autonlist"));
 
     XboxController driverXbox = new XboxController(0);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
+     *
+     * @throws IOException
      */
-    public RobotContainer() {
+    public RobotContainer() throws IOException {
 
         // Register Named Commands
         NamedCommands.registerCommand("Intake",
@@ -181,7 +176,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
-        return drivebase.getAutonomousCommand("Example_Auto");
+        return drivebase.getAutonomousCommand(autonChooser.getCurrent());
     }
 
     public void setDriveMode() {

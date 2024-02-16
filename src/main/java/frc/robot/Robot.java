@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import java.io.File;
@@ -55,7 +53,12 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer. This will perform all our button bindings,
         // and put our
         // autonomous chooser on the dashboard.
-        m_robotContainer = new RobotContainer();
+        try {
+            m_robotContainer = new RobotContainer();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         // Create a timer to disable motor brake a few seconds after disable. This will
         // let the robot stop

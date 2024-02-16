@@ -2,7 +2,6 @@ package frc.robot;
 
 import com.pathplanner.lib.util.PIDConstants;
 import com.revrobotics.CANSparkBase.IdleMode;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -58,8 +57,10 @@ public class Constants {
     }
 
     public static class AutonConstants {
+
         public static final PIDConstants TRANSLATION_PID = new PIDConstants(0.7, 0, 0);
         public static final PIDConstants ANGLE_PID = new PIDConstants(0.004, 0, 1.5);
+
     }
 
     public static class VisionConstants {
